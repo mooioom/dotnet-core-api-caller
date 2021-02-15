@@ -1,0 +1,46 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="title">Get A Quota</h1>
+    <div class="field">
+        <div class="title">Client Name</div>
+        <div class="input"><input type="text" id="cname" value="My Client"></div>
+    </div>
+    <div class="field">
+        <div class="title">Cost</div>
+        <div class="input"><input type="text" id="cost" value="100"></div>
+    </div>
+    <div class="field">
+        <div class="title">Product Name</div>
+        <div class="input"><input type="text" id="pname" value="Product Name"></div>
+    </div>
+    <div class="button" id="send">Download</div>    
+</div>
+
+<script>
+
+    async function getQuota(){
+
+        var r = await fetch( '/getQuota', {
+            method  : 'POST',
+            headers : { 'Content-Type': 'application/json' },
+            body    : JSON.stringify({
+                cname  : cname.value,
+                pname  : pname.value,
+                cost   : Number(cost.value)
+            }) 
+        });
+
+        r.json().then( r => {
+            console.log(r);
+        });
+
+    }
+
+    send.onclick = getQuota;
+
+</script>
